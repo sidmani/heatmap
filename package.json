@@ -1,6 +1,6 @@
 {
   "name": "terminal-heatmap",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "github-style heatmap in the terminal",
   "main": "index.js",
   "scripts": {
