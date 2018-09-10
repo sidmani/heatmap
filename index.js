@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const char = '▦ ';
+const defaultChar = '▦';
 
 function map(val, inMin, inMax, rgbMin, rgbMax) {
   const frac = (val - inMin) / (inMax - inMin);
@@ -19,9 +19,13 @@ module.exports = function heatmap(data, minColor, maxColor, minValue, maxValue) 
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
-      const value = data[i][j] || 0;
-      const hex = map(value, minValue, maxValue, minColorRGB, maxColorRGB).map(x => x.toString(16)).join('');
-      process.stdout.write(chalk.hex(hex)(char));
+      const point = data[i][j] || 0;
+      let color = point.color ? hexToRGB(point.color) : maxColorRGB;
+      const hex = map(point.value || point, minValue, point.max || maxValue, minColorRGB, color)
+        .map(x => x.toString(16))
+        .join('');
+      const char = point.char || defaultChar;
+      process.stdout.write(chalk`{hex('${hex}') ${char} }`);
     }
     process.stdout.write('\n');
   }
