@@ -3,7 +3,7 @@ const defaultChar = '▦';
 
 function map(val, inMin, inMax, rgbMin, rgbMax) {
   const frac = (val - inMin) / (inMax - inMin);
-  return rgbMin.map((v, idx) => Math.min(Math.max((rgbMax[idx] - v) * frac + v, rgbMax[idx]), v));
+  return rgbMin.map((v, idx) => Math.round(v + (rgbMax[idx] - v) * frac));
 }
 
 function hexToRGB(hex) {
