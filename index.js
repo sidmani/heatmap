@@ -10,7 +10,7 @@ function hexToRGB(hex) {
   return /#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex).slice(1).map(v => parseInt(v, 16));;
 }
 
-module.exports = function heatmap(data, minColor, maxColor, minValue, maxValue) {
+module.exports = function heatmap(data, minColor, maxColor, minValue, maxValue, customChar) {
   const rows = data.length;
   const columns = data[0].length;
 
@@ -24,7 +24,7 @@ module.exports = function heatmap(data, minColor, maxColor, minValue, maxValue) 
       const hex = map(point.value || point, minValue, point.max || maxValue, minColorRGB, color)
         .map(x => x.toString(16))
         .join('');
-      const char = point.char || defaultChar;
+      const char = point.char || customChar || defaultChar;
       process.stdout.write(chalk`{hex('${hex}') ${char} }`);
     }
     process.stdout.write('\n');
